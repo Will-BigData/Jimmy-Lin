@@ -4,6 +4,9 @@ class BasicDAO:
     def __init__(self, filename):
         self.connection = JSONAccess(filename)
         self.jsondata = self.connection.read()
+        if not self.jsondata:
+            self.jsondata = []
+            self.write()
         pass
 
     def getNewID(self):
