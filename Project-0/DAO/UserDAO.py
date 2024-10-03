@@ -1,4 +1,5 @@
 from .BasicDAO import BasicDAO
+import datetime
 
 class UserDAO:
     def __init__(self):
@@ -11,10 +12,7 @@ class UserDAO:
         if not (data.get("name") and data.get("email") and data.get("password")):
             return False
         for u in self.getAllUsers():
-            print(u['id'])
-            print(id)
             if id == u['id']:
-                print("triggered")
                 continue
             if u.get("name") == data.get("name") or u.get("email") == data.get("email"):
                 return False
@@ -34,25 +32,14 @@ class UserDAO:
     
     def createUser(self, **kwarg):
         data = {
-            "name": kwarg["name"],
-            "email": kwarg["email"],
-            "password": kwarg["password"]
+            "user_id": kwarg["user_id"],
+            "account_id": kwarg["account_id"],
+            "update": kwarg["update"],
+            "reason": kwarg.get("reason", "None Given"),
+            "date": datetime.datetime.now()
         }
         if(self.canUpdate(data)):
             return self.basic.create(**data)
-        return False
-    
-    def updateUser(self, id, **kwarg):
-        found = self.getUserByID(id)
-        if(not found):
-            return False
-        data = {
-            "name": kwarg.get("name", found['name']),
-            "email": kwarg.get("email", found['email']),
-            "password": kwarg.get("password", found['password']),
-        }
-        if(self.canUpdate(data, id)):
-            return self.basic.update(**data, id=id)
         return False
     
     def deleteUser(self, id):

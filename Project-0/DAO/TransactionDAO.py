@@ -1,38 +1,38 @@
 from .BasicDAO import BasicDAO
 
-class AccountDAO:
+class TransactionDAO:
     def __init__(self):
-        self.basic = BasicDAO('Project-0/database/account.json')
+        self.basic = BasicDAO('Project-0/database/transaction.json')
         
-    def getAllAccounts(self):
+    def getAllTransactions(self):
         return self.basic.read()
     
     def canUpdate(self, data):
         return (data.get("name") and data.get("amount") and data.get("type")) and data.get("owner_id")
     
-    def getAccountByID(self, id):
+    def getTransactionByID(self, id):
         found = [u for u in self.basic.read() if u.get('id') == id]
         if(len(found) > 0):
             return found[0]
         return None
     
-    def getAccountByUserID(self, user_id):
+    def getTransactionByUserID(self, user_id):
         found = [u for u in self.basic.read() if u.get('owner_id') == user_id]
         return found
     
-    def createAccount(self, **kwarg):
+    def createTransaction(self, **kwarg):
         data = {
             "owner_id": kwarg["owner_id"],
             "name": kwarg["name"],
-            "amount": 0,
+            "amount": kwarg["amount"],
             "type": kwarg["type"],
         }
         if(self.canUpdate(data)):
             return self.basic.create(**data)
         return False
     
-    def updateAccount(self, id, **kwarg):
-        found = self.getAccountByID(id)
+    def updateTransaction(self, id, **kwarg):
+        found = self.getTransactionByID(id)
         if(not found):
             return False
         data = {
@@ -45,5 +45,5 @@ class AccountDAO:
             return self.basic.update(**data, id=id)
         return False
     
-    def deleteAccount(self, id):
+    def deleteTransaction(self, id):
         return self.basic.delete(id)
