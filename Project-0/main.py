@@ -1,8 +1,10 @@
 # from util.JSONAccess import JSONAccess
 import math
 from DAO.UserDAO import UserDAO
+from DAO.AccountDAO import AccountDAO
 
-# dao = UserDAO()
+dao = AccountDAO()
+user = UserDAO()
 # dao.createUser(name="apple", email="no", password="no")
 # print(dao.getAllUsers())
 # dao.updateUser(id=0, name="apple pie")

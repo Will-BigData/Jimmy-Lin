@@ -2,7 +2,7 @@ from .BasicDAO import BasicDAO
 
 class AccountDAO:
     def __init__(self):
-        self.basic = BasicDAO('database/account.json')
+        self.basic = BasicDAO('Project-0/database/account.json')
         
     def getAllAccounts(self):
         return self.basic.read()

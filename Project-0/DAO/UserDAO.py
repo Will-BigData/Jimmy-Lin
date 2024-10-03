@@ -2,7 +2,7 @@ from .BasicDAO import BasicDAO
 
 class UserDAO:
     def __init__(self):
-        self.basic = BasicDAO('database/user.json')
+        self.basic = BasicDAO('Project-0/database/user.json')
         
     def getAllUsers(self):
         return self.basic.read()

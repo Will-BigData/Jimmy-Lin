@@ -5,8 +5,12 @@ class JSONAccess:
         self.filename = filename
 
     def read(self):
-        with open(self.filename, 'r') as file:
-            return json.load(file)
+        try:
+            with open(self.filename, 'r') as file:
+                return json.load(file)
+        except FileNotFoundError:
+            self.write([])
+            return []
 
         
     def write(self, data):
