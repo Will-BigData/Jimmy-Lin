@@ -18,7 +18,7 @@ class AccountDAO:
     
     def getAccountByUserID(self, user_id):
         found = [u for u in self.basic.read() if u.get('owner_id') == user_id]
-        return found
+        return found if found else []
     
     def createAccount(self, **kwarg):
         data = {
