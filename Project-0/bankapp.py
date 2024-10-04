@@ -37,7 +37,38 @@ class Bank:
             "q": {"text":"Quit", "func": lambda s:s.exit()},
         }
     }
-    
+
+    def __init__(self):
+        self.state = 0
+        self.user = None
+        self.accounts = []
+        self.selected = None
+
+    def run(self):
+        self.running = True
+        self.current_options = self.login_options
+        while(self.running):
+            self.handle_options()
+            
+    def handle_options(self, current=None):
+        if current == None:
+            current = self.current_options
+        text = current['text']
+        options = current['options']
+        display = current.get('display')
+        print(text)
+        if display:
+            display(self)
+        for l,o in options.items():
+            print(f'{l}: {o["text"]}')
+        while(True):
+            letter = input("Please choose an option: ")
+            try:
+                self.current_options['options'][letter]['func'](self)
+                return
+            except KeyError as e:
+                print("Not an option")
+
     def update_options(self):
         if not self.user:
             self.current_options = self.login_options
@@ -51,37 +82,7 @@ class Bank:
         self.user = user
         self.accounts = accounts.getAccountByUserID(user['id']) if user else []
         self.update_options()
-
-    def __init__(self):
-        self.state = 0
-        self.user = None
-        self.accounts = []
-        self.selected = None
-
-    def run(self):
-        self.running = True
-        self.current_options = self.login_options
-        while(self.running):
-            self.display_options()
-            letter = input("Please choose an option: ")
-            print(letter)
-            try:
-                running = self.current_options['options'][letter]['func'](self)
-            except KeyError as e:
-                print("Not an option")
-            pass
-            
-    def display_options(self, current=None):
-        if current == None:
-            current = self.current_options
-        text = current['text']
-        options = current['options']
-        display = current.get('display')
-        print(text)
-        if display:
-            display(self)
-        for l,o in options.items():
-            print(f'{l}: {o["text"]}')
+        
     
     def exit(self):
         print("Thanks for using our app")
