@@ -1,4 +1,5 @@
 from .BasicDAO import BasicDAO
+import datetime
 
 class TransactionDAO:
     def __init__(self):
@@ -22,27 +23,14 @@ class TransactionDAO:
     
     def createTransaction(self, **kwarg):
         data = {
-            "owner_id": kwarg["owner_id"],
-            "name": kwarg["name"],
-            "amount": kwarg["amount"],
-            "type": kwarg["type"],
+            "user_id": kwarg["user_id"],
+            "account_id": kwarg["account_id"],
+            "update": kwarg["update"],
+            "reason": kwarg.get("reason", "None Given"),
+            "date": datetime.datetime.now()
         }
         if(self.canUpdate(data)):
             return self.basic.create(**data)
-        return False
-    
-    def updateTransaction(self, id, **kwarg):
-        found = self.getTransactionByID(id)
-        if(not found):
-            return False
-        data = {
-            "owner_id": kwarg.get("owner_id", found["owner_id"]),
-            "name": kwarg.get("name", found["name"]),
-            "amount": kwarg.get("amount", found["amount"]),
-            "type": kwarg.get("type", found["type"]),
-        }
-        if(self.canUpdate(data)):
-            return self.basic.update(**data, id=id)
         return False
     
     def deleteTransaction(self, id):

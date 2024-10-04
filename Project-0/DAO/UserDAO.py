@@ -32,11 +32,9 @@ class UserDAO:
     
     def createUser(self, **kwarg):
         data = {
-            "user_id": kwarg["user_id"],
-            "account_id": kwarg["account_id"],
-            "update": kwarg["update"],
-            "reason": kwarg.get("reason", "None Given"),
-            "date": datetime.datetime.now()
+            "name": kwarg["name"],
+            "email": kwarg["email"],
+            "password": kwarg["password"]
         }
         if(self.canUpdate(data)):
             return self.basic.create(**data)
