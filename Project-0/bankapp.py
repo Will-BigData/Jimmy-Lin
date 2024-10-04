@@ -82,7 +82,6 @@ class Bank:
         self.user = user
         self.accounts = accounts.getAccountByUserID(user['id']) if user else []
         self.update_options()
-        
     
     def exit(self):
         print("Thanks for using our app")
