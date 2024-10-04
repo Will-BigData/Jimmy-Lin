@@ -17,7 +17,7 @@ class Bank:
     }
     list_options = {
         "text": "These are your accounts",
-        "display": lambda s: print(s.accounts),
+        "display": lambda s: s.display_accounts(),
         "options": {
             "s": {"text":"Select Account", "func": lambda a:print("WIP")},
             "c": {"text":"Create Account", "func": lambda s:s.create_account()},
@@ -27,6 +27,7 @@ class Bank:
     }
     account_options = {
         "text": "What do you want to do with this Account",
+        "display": lambda s: s.display_accounts(),
         "options": {
             "d": {"text":"Deposit", "func": lambda a:print("WIP")},
             "w": {"text":"Withdraw", "func": lambda a:print("WIP")},
@@ -51,17 +52,18 @@ class Bank:
         while(self.running):
             self.handle_options()
             
-    def handle_options(self, current=None):
-        if current == None:
-            current = self.current_options
-        text = current['text']
-        options = current['options']
-        display = current.get('display')
-        print(text)
+    def handle_options(self, current=None, display=True):
         if display:
-            display(self)
-        for l,o in options.items():
-            print(f'{l}: {o["text"]}')
+            if current == None:
+                current = self.current_options
+            text = current['text']
+            options = current['options']
+            display = current.get('display')
+            print(text)
+            if display:
+                display(self)
+            for l,o in options.items():
+                print(f'{l}: {o["text"]}')
         while(True):
             letter = input("Please choose an option: ")
             try:
@@ -82,6 +84,10 @@ class Bank:
     def update_user(self, user):
         self.user = user
         self.accounts = accounts.getAccountByUserID(user['id']) if user else []
+        self.update_options()
+
+    def update_selected(self, selected):
+        self.selected = selected
         self.update_options()
     
     def exit(self):
@@ -118,6 +124,10 @@ class Bank:
         self.update_user(None)
         print("You have successfully logged out")
     #user related ends
+    def display_accounts(self):
+        print(self.accounts)
+        if self.selected:
+            print(self.selected)
 
     def create_account(self):
         name = input("Enter Account name")
@@ -129,6 +139,10 @@ class Bank:
         acc = accounts.createAccount(owner_id=self.user['id'], name=name, type=acc_type)
         self.accounts.append(acc)
         print("Account Successfully created")
+
+    def select_account(self):
+        selectables = {i:a[name] for i,a in enumerate(self.accounts)}
+        
         
         
         
