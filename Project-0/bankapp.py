@@ -53,11 +53,11 @@ class Bank:
             self.handle_options()
             
     def handle_options(self, current=None, display=True):
+        options = current['options']
         if display:
             if current == None:
                 current = self.current_options
             text = current['text']
-            options = current['options']
             display = current.get('display')
             print(text)
             if display:
@@ -67,7 +67,7 @@ class Bank:
         while(True):
             letter = input("Please choose an option: ")
             try:
-                self.current_options['options'][letter]['func'](self)
+                current['options'][letter]['func'](self)
                 return
             except KeyError as e:
                 print("Not an option")
