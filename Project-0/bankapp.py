@@ -31,7 +31,7 @@ class Bank:
         "options": {
             "d": {"text":"Deposit", "func": lambda a:print("WIP")},
             "w": {"text":"Withdraw", "func": lambda a:print("WIP")},
-            "c": {"text":"Cancel", "func": lambda a:print("WIP")},
+            "c": {"text":"Cancel", "func": lambda s:s.unselect()},
             "v": {"text":"View Transactions", "func": lambda a:print("WIP")},
             "s": {"text":"Select Another Account", "func": lambda a:print("WIP")},
             "u": {"text":"Update Account", "func": lambda a:print("WIP")},
@@ -46,6 +46,7 @@ class Bank:
         self.user = None
         self.accounts = []
         self.selected = None
+        self.transactions = []
 
     def run(self):
         self.running = True
@@ -89,6 +90,7 @@ class Bank:
 
     def update_selected(self, selected):
         self.selected = selected
+        self.transactions = transactions.getTransactionByAccountID(account_id=selected['id']) if selected else []
         self.update_options()
     
     def exit(self):
@@ -151,6 +153,9 @@ class Bank:
             if index == 'b':
                 print("Action cancelled")
                 return
+            
+    def unselect(self):
+        self.update_selected(None)
 
         
         
