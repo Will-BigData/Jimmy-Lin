@@ -1,4 +1,5 @@
 from .BasicDAO import BasicDAO
+import datetime
 
 class AccountDAO:
     def __init__(self):
@@ -8,7 +9,7 @@ class AccountDAO:
         return self.basic.read()
     
     def canUpdate(self, data):
-        return (data.get("name") and data.get("amount") and data.get("type")) and data.get("owner_id")
+        return (data.get("name") and data.get("type")) and (data.get("owner_id") != None) and (data.get("amount") != None)
     
     def getAccountByID(self, id):
         found = [u for u in self.basic.read() if u.get('id') == id]
@@ -26,6 +27,7 @@ class AccountDAO:
             "name": kwarg["name"],
             "amount": 0,
             "type": kwarg["type"],
+            "created_at": datetime.datetime.now()
         }
         if(self.canUpdate(data)):
             return self.basic.create(**data)
