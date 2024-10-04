@@ -28,6 +28,7 @@ class BasicDAO:
         data['id'] = self.getNewID()
         self.jsondata.append(data)
         self.write()
+        return data
         
 
     def update(self, id, **data):
