@@ -4,5 +4,11 @@
         "email": "no",
         "password": "no",
         "id": 0
+    },
+    {
+        "name": "yes",
+        "email": "yes",
+        "password": "yes",
+        "id": 1
     }
 ]

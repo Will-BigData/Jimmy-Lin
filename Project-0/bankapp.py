@@ -10,6 +10,7 @@ class Bank:
     login_options = {
         "text": "Welcome to the app",
         "options": {
+            "s":{"text":"Signup", "func": lambda s:s.signup()},
             "l":{"text":"Login", "func": lambda s:s.login()},
             "q":{"text":"Quit", "func": lambda s:s.exit()},
         }
@@ -19,7 +20,7 @@ class Bank:
         "display": lambda s: print(s.accounts),
         "options": {
             "s": {"text":"Select Account", "func": lambda a:print("WIP")},
-            "c": {"text":"Create Account", "func": lambda a:print("WIP")},
+            "c": {"text":"Create Account", "func": lambda s:s.create_account()},
             "l": {"text":"Logout", "func": lambda s:s.logout()},
             "q": {"text":"Quit", "func": lambda s:s.exit()},
         }
@@ -87,6 +88,19 @@ class Bank:
         print("Thanks for using our app")
         self.running = False
 
+    #user related
+    def signup(self):
+        name = input("Enter Name: ")
+        email = input("Enter Email: ")
+        password = input("Enter Password: ")
+        user = users.createUser(email=email, password=password, name=name)
+        if not user:
+            print("This name or email is already in use")
+            return
+        self.update_user(user)
+        print(user)
+        print("SignUp Successful")
+
     def login(self):
         email = input("Enter Email: ")
         password = input("Enter Password: ")
@@ -103,6 +117,19 @@ class Bank:
     def logout(self):
         self.update_user(None)
         print("You have successfully logged out")
+    #user related ends
+
+    def create_account(self):
+        name = input("Enter Account name")
+        t = input("Enter Account Type:\nc: Checking\ns: Saving")
+        types = {"c":"Checking", "s":"Saving"}
+        while(t not in types.keys()):
+            t = input("Please Enter a valid option:")
+        acc_type = types[t]
+        acc = accounts.createAccount(owner_id=self.user['id'], name=name, type=acc_type)
+        self.accounts.append(acc)
+        print("Account Successfully created")
+        
         
         
 
