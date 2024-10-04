@@ -19,7 +19,7 @@ class Bank:
         "text": "These are your accounts",
         "display": lambda s: s.display_accounts(),
         "options": {
-            "s": {"text":"Select Account", "func": lambda a:print("WIP")},
+            "s": {"text":"Select Account", "func": lambda s:s.select_account()},
             "c": {"text":"Create Account", "func": lambda s:s.create_account()},
             "l": {"text":"Logout", "func": lambda s:s.logout()},
             "q": {"text":"Quit", "func": lambda s:s.exit()},
@@ -31,6 +31,7 @@ class Bank:
         "options": {
             "d": {"text":"Deposit", "func": lambda a:print("WIP")},
             "w": {"text":"Withdraw", "func": lambda a:print("WIP")},
+            "c": {"text":"Cancel", "func": lambda a:print("WIP")},
             "v": {"text":"View Transactions", "func": lambda a:print("WIP")},
             "s": {"text":"Select Another Account", "func": lambda a:print("WIP")},
             "u": {"text":"Update Account", "func": lambda a:print("WIP")},
@@ -53,10 +54,10 @@ class Bank:
             self.handle_options()
             
     def handle_options(self, current=None, display=True):
+        if current == None:
+                current = self.current_options
         options = current['options']
         if display:
-            if current == None:
-                current = self.current_options
             text = current['text']
             display = current.get('display')
             print(text)
@@ -141,7 +142,17 @@ class Bank:
         print("Account Successfully created")
 
     def select_account(self):
-        selectables = {i:a[name] for i,a in enumerate(self.accounts)}
+        if not len(self.accounts):
+            print("You have no accounts")
+        index = input("Select an Account: ")
+        try:
+            self.update_selected(self.accounts[int(index)])
+        except Exception as e:
+            if index == 'b':
+                print("Action cancelled")
+                return
+
+        
         
         
         
