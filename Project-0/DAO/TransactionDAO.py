@@ -21,6 +21,10 @@ class TransactionDAO:
         found = [u for u in self.basic.read() if u.get('owner_id') == user_id]
         return found
     
+    def getTransactionByAccountID(self, account_id):
+        found = [u for u in self.basic.read() if u.get('account_id') == account_id]
+        return found
+    
     def createTransaction(self, **kwarg):
         data = {
             "user_id": kwarg["user_id"],
