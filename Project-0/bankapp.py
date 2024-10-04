@@ -1,6 +1,7 @@
 from DAO.UserDAO import UserDAO
 from DAO.AccountDAO import AccountDAO
 from DAO.TransactionDAO import TransactionDAO
+import pandas as pd
 
 users = UserDAO()
 accounts = AccountDAO()
@@ -33,7 +34,6 @@ class Bank:
             "w": {"text":"Withdraw", "func": lambda a:print("WIP")},
             "c": {"text":"Cancel", "func": lambda s:s.unselect()},
             "v": {"text":"View Transactions", "func": lambda a:print("WIP")},
-            "s": {"text":"Select Another Account", "func": lambda a:print("WIP")},
             "u": {"text":"Update Account", "func": lambda a:print("WIP")},
             "x": {"text":"Delete Account", "func": lambda a:print("WIP")},
             "l": {"text":"Logout", "func": lambda s:s.logout()},
@@ -127,10 +127,21 @@ class Bank:
         self.update_user(None)
         print("You have successfully logged out")
     #user related ends
-    def display_accounts(self):
-        print(self.accounts)
-        if self.selected:
-            print(self.selected)
+    #Account List Related
+    def display_accounts(self, selectedonly=False):
+        data = {
+            "index": [],
+            "name": [],
+            "amount": [],
+            "type": []
+        }
+        for i, a in enumerate(self.accounts):
+            if not selectedonly or a['id'] == self.selected['id']:
+                data['index'].append(i)
+                data['name'].append(a['name'])
+                data["amount"].append(f'${a["amount"]:.2f}')
+                data["type"].append(a['type'])
+        print(pd.DataFrame(data))
 
     def create_account(self):
         name = input("Enter Account name")
@@ -146,13 +157,14 @@ class Bank:
     def select_account(self):
         if not len(self.accounts):
             print("You have no accounts")
-        index = input("Select an Account: ")
+        index = input("Select an Account by Index: ")
         try:
             self.update_selected(self.accounts[int(index)])
         except Exception as e:
             if index == 'b':
                 print("Action cancelled")
                 return
+    #Account List Related Ends
             
     def unselect(self):
         self.update_selected(None)
