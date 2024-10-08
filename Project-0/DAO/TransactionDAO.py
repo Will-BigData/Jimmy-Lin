@@ -8,9 +8,6 @@ class TransactionDAO:
     def getAllTransactions(self):
         return self.basic.read()
     
-    def canUpdate(self, data):
-        return (data.get("name") and data.get("amount") and data.get("type")) and data.get("owner_id")
-    
     def getTransactionByID(self, id):
         found = [u for u in self.basic.read() if u.get('id') == id]
         if(len(found) > 0):
@@ -33,9 +30,7 @@ class TransactionDAO:
             "reason": kwarg.get("reason", "None Given"),
             "date": datetime.datetime.now()
         }
-        if(self.canUpdate(data)):
-            return self.basic.create(**data)
-        return False
+        return self.basic.create(**data)
     
     def deleteTransaction(self, id):
         return self.basic.delete(id)
