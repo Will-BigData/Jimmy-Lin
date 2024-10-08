@@ -28,10 +28,10 @@ class Bank:
     }
     account_options = {
         "text": "What do you want to do with this Account",
-        "display": lambda s: s.display_accounts(),
+        "display": lambda s: s.display_accounts(selectedonly=True),
         "options": {
-            "d": {"text":"Deposit", "func": lambda a:print("WIP")},
-            "w": {"text":"Withdraw", "func": lambda a:print("WIP")},
+            "d": {"text":"Deposit", "func": lambda s:s.update_funds(False)},
+            "w": {"text":"Withdraw", "func": lambda s:s.update_funds(True)},
             "c": {"text":"Cancel", "func": lambda s:s.unselect()},
             "v": {"text":"View Transactions", "func": lambda a:print("WIP")},
             "u": {"text":"Update Account", "func": lambda a:print("WIP")},
@@ -87,6 +87,9 @@ class Bank:
         self.user = user
         self.accounts = accounts.getAccountByUserID(user['id']) if user else []
         self.update_options()
+    
+    def update_accounts(self):
+        self.accounts = accounts.getAccountByUserID(self.user['id']) if self.user else []
 
     def update_selected(self, selected):
         self.selected = selected
@@ -168,6 +171,38 @@ class Bank:
             
     def unselect(self):
         self.update_selected(None)
+
+    def update_funds(self, withdraw):
+        name = "Withdraw" if withdraw else "Deposit"
+        while(True):
+            try:
+                num = input(f"Please Input {name} Amount: ")
+                if(num == 'b'):
+                    print("Transaction canceled")
+                    return
+                num = float(num)
+                if(num*100 % 1 > 0):
+                    print("Please enter a valid amount (a)")
+                    continue
+                if(num <= 0):
+                    print("Positive amounts only")
+                    continue
+                if withdraw:
+                    num = -num
+                break
+            except Exception as e:
+                print("Please enter a valid amount (b)")
+        if self.selected['amount']+num < 0:
+            print("Insufficent funds")
+            return
+        reason = input("Please Input Reason (optional): ")
+        reason = None if reason == "" else reason
+        transactions.createTransaction(user_id=self.user['id'], account_id=self.selected['id'], update=num, reason=reason)
+        accounts.updateAccount(id=self.selected['id'], amount=self.selected['amount']+num)
+        self.update_accounts()
+        self.update_selected(self.selected)
+        print(f"{name} Complete")
+            
 
         
         
