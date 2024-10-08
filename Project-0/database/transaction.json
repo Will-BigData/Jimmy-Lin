@@ -1,1 +1,18 @@
-[]
+[
+    {
+        "user_id": 0,
+        "account_id": 0,
+        "update": 20000.0,
+        "reason": "rich",
+        "date": "2024-10-08 12:50:48.595050",
+        "id": 0
+    },
+    {
+        "user_id": 0,
+        "account_id": 0,
+        "update": -100.0,
+        "reason": "I wanna buy $100 worth of ice cream",
+        "date": "2024-10-08 12:52:18.403765",
+        "id": 1
+    }
+]

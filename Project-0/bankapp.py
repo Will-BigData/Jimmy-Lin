@@ -33,7 +33,7 @@ class Bank:
             "d": {"text":"Deposit", "func": lambda s:s.update_funds(False)},
             "w": {"text":"Withdraw", "func": lambda s:s.update_funds(True)},
             "c": {"text":"Cancel", "func": lambda s:s.unselect()},
-            "v": {"text":"View Transactions", "func": lambda a:print("WIP")},
+            "v": {"text":"View Transactions", "func": lambda s:s.view_transactions()},
             "u": {"text":"Update Account", "func": lambda a:print("WIP")},
             "x": {"text":"Delete Account", "func": lambda a:print("WIP")},
             "l": {"text":"Logout", "func": lambda s:s.logout()},
@@ -93,7 +93,7 @@ class Bank:
 
     def update_selected(self, selected):
         self.selected = selected
-        self.transactions = transactions.getTransactionByAccountID(account_id=selected['id']) if selected else []
+        self.transactions = sorted(transactions.getTransactionByAccountID(account_id=selected['id']), key=lambda x:x['date'], reverse=True) if selected else []
         self.update_options()
     
     def exit(self):
@@ -202,7 +202,19 @@ class Bank:
         self.update_accounts()
         self.update_selected(self.selected)
         print(f"{name} Complete")
-            
+
+    def view_transactions(self):
+        data = {
+            "update": [],
+            "reason": [],
+            "date": []
+        }
+        for t in self.transactions:
+            data['date'].append(t['date'])
+            data['update'].append(t['update'])
+            data['reason'].append(t['reason'])
+        print(pd.DataFrame(data))
+        
 
         
         

@@ -28,7 +28,7 @@ class TransactionDAO:
             "account_id": kwarg["account_id"],
             "update": kwarg["update"],
             "reason": kwarg.get("reason", "None Given"),
-            "date": datetime.datetime.now()
+            "date": str(datetime.datetime.now())
         }
         return self.basic.create(**data)
     
