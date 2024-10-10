@@ -34,7 +34,7 @@ class Bank:
             "w": {"text":"Withdraw", "func": lambda s:s.update_funds(True)},
             "c": {"text":"Cancel", "func": lambda s:s.unselect()},
             "v": {"text":"View Transactions", "func": lambda s:s.view_transactions()},
-            "u": {"text":"Update Account", "func": lambda a:print("WIP")},
+            "u": {"text":"Update Account", "func": lambda s:s.update_account_info()},
             "x": {"text":"Delete Account", "func": lambda s:s.delete_account()},
             "l": {"text":"Logout", "func": lambda s:s.logout()},
             "q": {"text":"Quit", "func": lambda s:s.exit()},
@@ -216,10 +216,25 @@ class Bank:
         print(pd.DataFrame(data))
 
     def delete_account(self):
-        transactions.deleteTransactionByAccount(self.selected['id'])
-        accounts.deleteAccount(self.selected['id'])
-        self.update_selected(None)
-        self.update_accounts()
+        confirm = input("Are You Sure (y to confirm): ")
+        if confirm == 'y':
+            transactions.deleteTransactionByAccount(self.selected['id'])
+            accounts.deleteAccount(self.selected['id'])
+            self.update_selected(None)
+            self.update_accounts()
+            print("Delete Successful")
+            return
+        print("Cancelled")
+    
+    def update_account_info(self):
+        name = input("New Account Name: ")
+        if not name == "":
+            accounts.updateAccount(id=self.selected['id'], name=name)
+            self.update_accounts()
+            print("Update Successful")
+            return
+        print("Update Cancelled")
+        
 
     
         
