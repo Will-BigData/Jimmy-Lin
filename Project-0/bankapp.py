@@ -35,7 +35,7 @@ class Bank:
             "c": {"text":"Cancel", "func": lambda s:s.unselect()},
             "v": {"text":"View Transactions", "func": lambda s:s.view_transactions()},
             "u": {"text":"Update Account", "func": lambda a:print("WIP")},
-            "x": {"text":"Delete Account", "func": lambda s:s.deleteAccount()},
+            "x": {"text":"Delete Account", "func": lambda s:s.delete_account()},
             "l": {"text":"Logout", "func": lambda s:s.logout()},
             "q": {"text":"Quit", "func": lambda s:s.exit()},
         }
