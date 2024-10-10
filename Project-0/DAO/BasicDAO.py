@@ -38,3 +38,7 @@ class BasicDAO:
     def delete(self, id):
         self.jsondata = list(filter(lambda x:x.get('id') != id, self.jsondata))
         self.write()
+
+    def customDelete(self, func):
+        self.jsondata = list(filter(func, self.jsondata))
+        self.write()

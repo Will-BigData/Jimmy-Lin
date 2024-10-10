@@ -34,7 +34,8 @@ class UserDAO:
         data = {
             "name": kwarg["name"],
             "email": kwarg["email"],
-            "password": kwarg["password"]
+            "password": kwarg["password"],
+            "created_at": str(datetime.datetime.now())
         }
         if(self.canUpdate(data)):
             return self.basic.create(**data)

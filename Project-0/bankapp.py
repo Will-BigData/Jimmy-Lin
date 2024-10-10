@@ -35,7 +35,7 @@ class Bank:
             "c": {"text":"Cancel", "func": lambda s:s.unselect()},
             "v": {"text":"View Transactions", "func": lambda s:s.view_transactions()},
             "u": {"text":"Update Account", "func": lambda a:print("WIP")},
-            "x": {"text":"Delete Account", "func": lambda a:print("WIP")},
+            "x": {"text":"Delete Account", "func": lambda s:s.deleteAccount()},
             "l": {"text":"Logout", "func": lambda s:s.logout()},
             "q": {"text":"Quit", "func": lambda s:s.exit()},
         }
@@ -214,6 +214,14 @@ class Bank:
             data['update'].append(t['update'])
             data['reason'].append(t['reason'])
         print(pd.DataFrame(data))
+
+    def delete_account(self):
+        transactions.deleteTransactionByAccount(self.selected['id'])
+        accounts.deleteAccount(self.selected['id'])
+        self.update_selected(None)
+        self.update_accounts()
+
+    
         
 
         

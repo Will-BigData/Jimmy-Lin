@@ -34,3 +34,6 @@ class TransactionDAO:
     
     def deleteTransaction(self, id):
         return self.basic.delete(id)
+    
+    def deleteTransactionByAccount(self, account_id):
+        return self.basic.customDelete(lambda a: a['account_id'] != account_id)

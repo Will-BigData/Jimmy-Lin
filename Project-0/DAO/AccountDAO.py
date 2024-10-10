@@ -27,7 +27,7 @@ class AccountDAO:
             "name": kwarg["name"],
             "amount": 0,
             "type": kwarg["type"],
-            "created_at": datetime.datetime.now()
+            "created_at": str(datetime.datetime.now())
         }
         if(self.canUpdate(data)):
             return self.basic.create(**data)
