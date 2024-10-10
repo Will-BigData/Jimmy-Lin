@@ -147,7 +147,7 @@ class Bank:
         print(pd.DataFrame(data))
 
     def create_account(self):
-        name = input("Enter Account name")
+        name = input("Enter Account Name: ")
         t = input("Enter Account Type:\nc: Checking\ns: Saving")
         types = {"c":"Checking", "s":"Saving"}
         while(t not in types.keys()):
