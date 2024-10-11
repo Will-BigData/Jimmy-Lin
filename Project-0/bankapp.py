@@ -144,7 +144,7 @@ class Bank:
                 data['name'].append(a['name'])
                 data["amount"].append(f'${a["amount"]:.2f}')
                 data["type"].append(a['type'])
-        print(pd.DataFrame(data))
+        print(pd.DataFrame(data).to_string(index=False))
 
     def create_account(self):
         name = input("Enter Account Name: ")
@@ -213,7 +213,7 @@ class Bank:
             data['date'].append(t['date'])
             data['update'].append(t['update'])
             data['reason'].append(t['reason'])
-        print(pd.DataFrame(data))
+        print(pd.DataFrame(data).to_string(index=False))
 
     def delete_account(self):
         confirm = input("Are You Sure (y to confirm): ")
