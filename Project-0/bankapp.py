@@ -113,7 +113,6 @@ class Bank:
             print("This name or email is already in use")
             return
         self.update_user(user)
-        print(user)
         print("SignUp Successful")
 
     def login(self):
@@ -136,6 +135,7 @@ class Bank:
     #Account List Related
     def display_accounts(self, selectedonly=False):
         if len(self.accounts) == 0:
+            print("You have no accounts")
             return
         data = {
             "index": [],
@@ -209,6 +209,9 @@ class Bank:
         print(f"{name} Complete")
 
     def view_transactions(self):
+        if len(self.transactions) == 0:
+            print("You have no transactions")
+            return
         data = {
             "update": [],
             "reason": [],

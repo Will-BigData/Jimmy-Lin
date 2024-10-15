@@ -17,5 +17,12 @@
         "password": "icecream",
         "created_at": "2024-10-15 10:20:13.161488",
         "id": 2
+    },
+    {
+        "name": "not",
+        "email": "not",
+        "password": "not",
+        "created_at": "2024-10-15 10:27:03.403553",
+        "id": 3
     }
 ]
