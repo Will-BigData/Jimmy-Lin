@@ -53,6 +53,7 @@ class Bank:
         self.current_options = self.login_options
         while(self.running):
             self.handle_options()
+            print()
             
     def handle_options(self, current=None, display=True):
         if current == None:
@@ -86,6 +87,7 @@ class Bank:
     def update_user(self, user):
         self.user = user
         self.accounts = accounts.getAccountByUserID(user['id']) if user else []
+        self.selected = None
         self.update_options()
     
     def update_accounts(self):

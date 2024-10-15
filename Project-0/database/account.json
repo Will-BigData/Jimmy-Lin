@@ -2,8 +2,24 @@
     {
         "owner_id": 0,
         "name": "can you not",
-        "amount": 19900.0,
+        "amount": 19800.0,
         "type": "Saving",
         "id": 0
+    },
+    {
+        "owner_id": 2,
+        "name": "icecreamfunds",
+        "amount": 20000.0,
+        "type": "Checking",
+        "created_at": "2024-10-15 10:20:36.464776",
+        "id": 1
+    },
+    {
+        "owner_id": 0,
+        "name": "test",
+        "amount": 0,
+        "type": "Saving",
+        "created_at": "2024-10-15 10:24:01.123715",
+        "id": 2
     }
 ]
