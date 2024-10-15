@@ -206,6 +206,7 @@ class Bank:
         accounts.updateAccount(id=self.selected['id'], amount=self.selected['amount']+num)
         self.selected['amount']+=num
         self.update_accounts()
+        self.update_selected(self.selected)
         print(f"{name} Complete")
 
     def view_transactions(self):
