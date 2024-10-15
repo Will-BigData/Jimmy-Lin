@@ -86,8 +86,9 @@ class Bank:
 
     def update_user(self, user):
         self.user = user
-        self.accounts = accounts.getAccountByUserID(user['id']) if user else []
+        self.update_accounts()
         self.selected = None
+        self.transactions = None
         self.update_options()
     
     def update_accounts(self):
@@ -134,6 +135,8 @@ class Bank:
     #user related ends
     #Account List Related
     def display_accounts(self, selectedonly=False):
+        if len(self.accounts) == 0:
+            return
         data = {
             "index": [],
             "name": [],
@@ -201,8 +204,8 @@ class Bank:
         reason = None if reason == "" else reason
         transactions.createTransaction(user_id=self.user['id'], account_id=self.selected['id'], update=num, reason=reason)
         accounts.updateAccount(id=self.selected['id'], amount=self.selected['amount']+num)
+        self.selected['amount']+=num
         self.update_accounts()
-        self.update_selected(self.selected)
         print(f"{name} Complete")
 
     def view_transactions(self):
